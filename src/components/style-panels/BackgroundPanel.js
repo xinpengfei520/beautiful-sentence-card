@@ -5,6 +5,7 @@ import { useStyle } from '../../context/StyleContext';
 export default function BackgroundPanel() {
   const { state, updateBackground } = useStyle();
   const [showColorPicker, setShowColorPicker] = useState(false);
+  const [selectedType, setSelectedType] = useState(''); // 默认不选中任何类型
   
   // 临时存储用户选择的颜色，但还未确认
   const [tempColor, setTempColor] = useState(state.background.color);
@@ -40,15 +41,16 @@ export default function BackgroundPanel() {
       type: 'gradient',
       gradient: tempGradient
     });
+    setShowColorPicker(false);
   };
 
   // 处理背景类型变化
   const handleTypeChange = (type) => {
-    updateBackground({ type });
-    // 重置临时颜色为当前实际颜色
+    setSelectedType(type);
     if (type === 'color') {
+      setShowColorPicker(true);
       setTempColor(state.background.color);
-    } else {
+    } else if (type === 'gradient') {
       setTempGradient(state.background.gradient);
     }
   };
@@ -59,17 +61,18 @@ export default function BackgroundPanel() {
       <div className="mb-4">
         <label className="block mb-2 text-gray-700 font-medium">背景类型</label>
         <select 
-          value={state.background.type}
+          value={selectedType}
           onChange={(e) => handleTypeChange(e.target.value)}
           className="w-full p-2 border rounded hover:border-blue-500 focus:border-blue-500 focus:outline-none"
         >
+          <option value="">请选择背景类型</option>
           <option value="color">纯色背景</option>
           <option value="gradient">渐变背景</option>
         </select>
       </div>
 
       {/* 纯色背景设置 */}
-      {state.background.type === 'color' && (
+      {selectedType === 'color' && (
         <div className="color-picker-container">
           <div className="flex items-center gap-3 mb-3">
             <div 
@@ -115,7 +118,7 @@ export default function BackgroundPanel() {
       )}
 
       {/* 渐变背景设置 */}
-      {state.background.type === 'gradient' && (
+      {selectedType === 'gradient' && (
         <div className="gradient-editor">
           <select 
             value={tempGradient.type}
