@@ -1,86 +1,128 @@
-import React, { useState, useEffect } from 'react';
-import { defaultTemplates } from '../constants/templates';
+import React from 'react';
+import { useStyle } from '../context/StyleContext';
 
-export default function TemplateSelector({ onSelect }) {
-  const [templates, setTemplates] = useState(defaultTemplates);
-  const [selectedId, setSelectedId] = useState(null);
-
-  // 选择模板
-  const handleSelect = (template) => {
-    setSelectedId(template.id);
-    onSelect(template);
-  };
-
-  // 导入模板
-  const handleImport = async (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      try {
-        const text = await file.text();
-        const imported = JSON.parse(text);
-        setTemplates(prev => [...prev, ...imported]);
-      } catch (err) {
-        console.error('导入模板失败:', err);
+// 预设模板配置
+const PRESET_TEMPLATES = [
+  {
+    id: 'simple',
+    name: '简约白',
+    styles: {
+      background: {
+        type: 'color',
+        color: '#FFFFFF'
+      },
+      font: {
+        color: '#2C3E50'
       }
+    },
+    preview: {
+      backgroundColor: '#FFFFFF',
+      color: '#2C3E50',
+      border: '1px solid #E5E7EB'
     }
-  };
+  },
+  {
+    id: 'dark',
+    name: '暗夜模式',
+    styles: {
+      background: {
+        type: 'color',
+        color: '#1A202C'
+      },
+      font: {
+        color: '#F7FAFC'
+      }
+    },
+    preview: {
+      backgroundColor: '#1A202C',
+      color: '#F7FAFC',
+      border: '1px solid #2D3748'
+    }
+  },
+  {
+    id: 'gradient',
+    name: '渐变粉',
+    styles: {
+      background: {
+        type: 'gradient',
+        gradient: {
+          type: 'linear',
+          direction: '135deg',
+          colors: ['#FED7E2', '#FEB2B2']
+        }
+      },
+      font: {
+        color: '#702459'
+      }
+    },
+    preview: {
+      background: 'linear-gradient(135deg, #FED7E2, #FEB2B2)',
+      color: '#702459'
+    }
+  },
+  {
+    id: 'vintage',
+    name: '复古风',
+    styles: {
+      background: {
+        type: 'color',
+        color: '#F7F2E9'
+      },
+      font: {
+        color: '#5C4B3C'
+      }
+    },
+    preview: {
+      backgroundColor: '#F7F2E9',
+      color: '#5C4B3C',
+      border: '1px solid #D3CDC4'
+    }
+  }
+];
 
-  // 导出模板
-  const handleExport = () => {
-    const data = JSON.stringify(templates);
-    const blob = new Blob([data], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
+export default function TemplateSelector() {
+  const { state, updateBackground, updateFont } = useStyle();
+  const [selectedTemplate, setSelectedTemplate] = React.useState(null);
+
+  // 应用模板样式
+  const handleTemplateSelect = (template) => {
+    setSelectedTemplate(template.id);
     
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'card-templates.json';
-    a.click();
+    // 更新背景
+    updateBackground(template.styles.background);
     
-    URL.revokeObjectURL(url);
+    // 更新字体颜色
+    updateFont({
+      color: template.styles.font.color
+    });
   };
 
   return (
-    <div className="template-selector">
-      <div className="templates-header flex justify-between p-2">
-        <h3>卡片模板</h3>
-        <div className="flex gap-2">
-          <input
-            type="file"
-            accept=".json"
-            onChange={handleImport}
-            className="hidden"
-            id="import-template"
-          />
-          <label 
-            htmlFor="import-template"
-            className="btn btn-secondary"
-          >
-            导入
-          </label>
-          <button 
-            onClick={handleExport}
-            className="btn btn-secondary"
-          >
-            导出
-          </button>
-        </div>
-      </div>
-
-      <div className="templates-grid grid grid-cols-3 gap-4 p-4">
-        {templates.map(template => (
+    <div className="template-selector p-4 border-t">
+      <h3 className="text-lg font-medium text-gray-700 mb-4">卡片模板</h3>
+      
+      <div className="grid grid-cols-2 gap-4">
+        {PRESET_TEMPLATES.map(template => (
           <div
             key={template.id}
-            className={`template-item cursor-pointer p-2 border rounded
-              ${selectedId === template.id ? 'border-blue-500' : ''}
+            onClick={() => handleTemplateSelect(template)}
+            className={`
+              template-preview p-4 rounded-lg cursor-pointer
+              transition-all duration-200 transform hover:scale-105
+              ${selectedTemplate === template.id 
+                ? 'ring-2 ring-blue-500 ring-offset-2' 
+                : 'hover:shadow-lg'
+              }
             `}
-            onClick={() => handleSelect(template)}
+            style={{
+              ...template.preview,
+              minHeight: '80px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
           >
-            <div 
-              className="template-preview h-24"
-              style={template.style}
-            >
-              {template.name}
-            </div>
+            <span className="font-medium">{template.name}</span>
           </div>
         ))}
       </div>

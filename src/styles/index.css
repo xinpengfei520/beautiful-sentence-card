@@ -23,3 +23,19 @@
   .color-preview:hover {
     opacity: 0.8;
   } 
+  
+  /* 模板预览样式 */
+  .template-preview {
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .template-preview:hover {
+    transform: translateY(-2px);
+  }
+  
+  .template-preview.selected {
+    box-shadow: 0 0 0 2px #3B82F6;
+  } 
