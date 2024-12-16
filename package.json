@@ -6,7 +6,8 @@
     "build:clean": "rimraf dist && webpack --config webpack.config.js",
     "build": "webpack --config webpack.config.js",
     "watch": "webpack --watch --config webpack.config.js",
-    "start": "webpack serve --config webpack.config.js --mode development"
+    "start": "webpack serve --config webpack.config.js --mode development",
+    "vercel-build": "npm run build"
   },
   "dependencies": {
     "html2canvas": "^1.4.1",
