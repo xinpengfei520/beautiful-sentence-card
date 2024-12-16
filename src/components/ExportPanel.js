@@ -1,130 +1,76 @@
 import React, { useState } from 'react';
 import html2canvas from 'html2canvas';
-
-const EXPORT_FORMATS = [
-  { id: 'png', name: 'PNG', mimeType: 'image/png' },
-  { id: 'jpeg', name: 'JPEG', mimeType: 'image/jpeg' },
-  { id: 'webp', name: 'WEBP', mimeType: 'image/webp' }
-];
-
-const QUALITY_OPTIONS = [
-  { value: 0.6, label: '普通' },
-  { value: 0.8, label: '高质量' },
-  { value: 1, label: '最佳' }
-];
+import { useStyle } from '../context/StyleContext';
 
 export default function ExportPanel({ cardRef }) {
-  const [format, setFormat] = useState(EXPORT_FORMATS[0]);
-  const [quality, setQuality] = useState(QUALITY_OPTIONS[1].value);
-  const [size, setSize] = useState({ width: 800, height: 600 });
+  const { state } = useStyle();
   const [exporting, setExporting] = useState(false);
+  const [error, setError] = useState(null);
 
-  // 导出图片
-  const handleExport = async () => {
-    if (!cardRef.current || exporting) return;
-
-    setExporting(true);
+  const exportCard = async () => {
+    if (!cardRef.current) return;
+    
     try {
-      const canvas = await html2canvas(cardRef.current, {
-        scale: 2, // 提高导出质量
-        useCORS: true, // 允许跨域图片
-        backgroundColor: null, // 保持透明背景
-        width: size.width,
-        height: size.height
-      });
+      setExporting(true);
+      setError(null);
 
-      // 转换为blob
-      canvas.toBlob(
-        (blob) => {
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = `card.${format.id}`;
-          a.click();
-          URL.revokeObjectURL(url);
-        },
-        format.mimeType,
-        quality
-      );
+      // 配置导出选项
+      const options = {
+        scale: 2, // 提高导出质量
+        useCORS: true, // 允许加载跨域图片
+        backgroundColor: null, // 保持背景透明
+        logging: false,
+        width: state.layout.width,
+        height: state.layout.height
+      };
+
+      // 生成图片
+      const canvas = await html2canvas(cardRef.current, options);
+      
+      // 转换为图片并下载
+      const image = canvas.toDataURL('image/png', 1.0);
+      const link = document.createElement('a');
+      link.download = '金句卡片.png';
+      link.href = image;
+      link.click();
+
+      setExporting(false);
     } catch (err) {
-      console.error('导出失败:', err);
-    } finally {
+      console.error('导出错误:', err);
+      setError('导出失败，请重试');
       setExporting(false);
     }
   };
 
   return (
-    <div className="export-panel p-4">
-      {/* 格式选择 */}
-      <div className="mb-4">
-        <label className="block mb-2">导出格式</label>
-        <select
-          value={format.id}
-          onChange={(e) => {
-            const selected = EXPORT_FORMATS.find(f => f.id === e.target.value);
-            setFormat(selected);
-          }}
-          className="w-full p-2 border rounded"
-        >
-          {EXPORT_FORMATS.map(format => (
-            <option key={format.id} value={format.id}>
-              {format.name}
-            </option>
-          ))}
-        </select>
-      </div>
+    <div className="export-panel p-4 border-t">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center space-x-4">
+          <button
+            onClick={exportCard}
+            disabled={exporting}
+            className={`
+              px-6 py-2 rounded-lg text-white font-medium
+              ${exporting 
+                ? 'bg-gray-400 cursor-not-allowed' 
+                : 'bg-blue-500 hover:bg-blue-600 active:bg-blue-700'}
+              transition duration-200
+            `}
+          >
+            {exporting ? '导出中...' : '导出图片'}
+          </button>
+          
+          {error && (
+            <span className="text-red-500 text-sm">
+              {error}
+            </span>
+          )}
+        </div>
 
-      {/* 质量选择 */}
-      <div className="mb-4">
-        <label className="block mb-2">导出质量</label>
-        <select
-          value={quality}
-          onChange={(e) => setQuality(Number(e.target.value))}
-          className="w-full p-2 border rounded"
-        >
-          {QUALITY_OPTIONS.map(option => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* 尺寸设置 */}
-      <div className="mb-4">
-        <label className="block mb-2">导出尺寸</label>
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm">宽度</label>
-            <input
-              type="number"
-              value={size.width}
-              onChange={(e) => setSize({ ...size, width: Number(e.target.value) })}
-              className="w-full p-2 border rounded"
-            />
-          </div>
-          <div>
-            <label className="block text-sm">高度</label>
-            <input
-              type="number"
-              value={size.height}
-              onChange={(e) => setSize({ ...size, height: Number(e.target.value) })}
-              className="w-full p-2 border rounded"
-            />
-          </div>
+        <div className="text-sm text-gray-500">
+          导出尺寸: {state.layout.width} x {state.layout.height}
         </div>
       </div>
-
-      {/* 导出按钮 */}
-      <button
-        onClick={handleExport}
-        disabled={exporting}
-        className={`w-full p-2 rounded text-white
-          ${exporting ? 'bg-gray-400' : 'bg-blue-500 hover:bg-blue-600'}
-        `}
-      >
-        {exporting ? '��出中...' : '导出图片'}
-      </button>
     </div>
   );
 } 

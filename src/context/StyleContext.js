@@ -1,5 +1,37 @@
 import React, { createContext, useContext, useReducer } from 'react';
 
+// 预设的配色方案
+const presetColors = {
+  elegant: {
+    background: '#F5F5F5',
+    text: '#2C3E50',
+    border: '#E0E0E0'
+  },
+  warm: {
+    background: '#FFF5E6',
+    text: '#8B4513',
+    border: '#FFE4B5'
+  },
+  cool: {
+    background: '#F0F8FF',
+    text: '#4A708B',
+    border: '#B0E0E6'
+  },
+  dark: {
+    background: '#2C3E50',
+    text: '#ECF0F1',
+    border: '#34495E'
+  }
+};
+
+// 预设字体
+const presetFonts = [
+  { name: '思源宋体', value: '"Noto Serif SC", serif' },
+  { name: '思源黑体', value: '"Noto Sans SC", sans-serif' },
+  { name: '楷体', value: 'KaiTi, serif' },
+  { name: '行楷', value: 'XingKai SC, cursive' }
+];
+
 // 创建Context
 const StyleContext = createContext();
 
@@ -7,44 +39,40 @@ const StyleContext = createContext();
 const initialState = {
   background: {
     type: 'color',
-    color: '#ffffff',
+    color: presetColors.elegant.background,
     gradient: {
       type: 'linear',
-      direction: '180deg',
-      colors: ['#ffffff', '#000000']
+      direction: '45deg',
+      colors: ['#ffffff', '#f0f0f0']
     },
-    image: null
+    image: ''
   },
   font: {
-    family: 'system-ui',
-    size: 16,
-    weight: 'normal',
-    letterSpacing: 0,
-    lineHeight: 1.5
+    family: presetFonts[0].value,
+    size: 24,
+    weight: 400,
+    letterSpacing: 1,
+    lineHeight: 1.5,
+    color: presetColors.elegant.text
   },
   layout: {
-    padding: {
-      top: 20,
-      right: 20,
-      bottom: 20,
-      left: 20
-    },
-    align: 'left',
-    width: 400,
-    height: 300
+    width: 800,
+    height: 400,
+    padding: { top: 40, right: 60, bottom: 40, left: 60 },
+    align: 'center'
   },
   effects: {
     shadow: {
-      blur: 0,
-      spread: 0,
       x: 0,
-      y: 0,
+      y: 2,
+      blur: 4,
+      spread: 0,
       color: 'rgba(0,0,0,0.1)'
     },
     border: {
-      width: 0,
+      width: 1,
       style: 'solid',
-      color: '#000000'
+      color: presetColors.elegant.border
     },
     opacity: 100
   }
