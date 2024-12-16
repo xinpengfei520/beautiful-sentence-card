@@ -30,9 +30,13 @@ export default function FontPanel() {
         <label className="block mb-2 text-gray-700 font-medium">文字颜色</label>
         <div className="color-picker-container">
           <div className="flex items-center gap-3">
-            <div 
-              className="color-preview cursor-pointer"
-              style={{ backgroundColor: state.font.color }}
+            <button
+              type="button"
+              className="color-preview"
+              style={{
+                backgroundColor: state.font.color,
+                border: `2px solid ${state.font.color === '#FFFFFF' ? '#E5E7EB' : state.font.color}`
+              }}
               onClick={() => setShowColorPicker(!showColorPicker)}
               title="点击选择颜色"
             />
@@ -47,7 +51,7 @@ export default function FontPanel() {
                 className="fixed inset-0" 
                 onClick={() => setShowColorPicker(false)}
               />
-              <div className="relative">
+              <div className="relative bg-white rounded-lg shadow-lg p-3">
                 <SketchPicker 
                   color={tempColor}
                   onChange={handleColorChange}
@@ -97,7 +101,7 @@ export default function FontPanel() {
           onChange={(e) => updateFont({ ...state.font, family: e.target.value })}
           className="w-full p-2 border rounded hover:border-blue-500 focus:border-blue-500 focus:outline-none"
         >
-          <option value='"Noto Serif SC", serif'>思源宋体</option>
+          <option value='"Noto Serif SC", serif'>���源宋体</option>
           <option value='"Noto Sans SC", sans-serif'>思源黑体</option>
           <option value="KaiTi, serif">楷体</option>
           <option value="XingKai SC, cursive">行楷</option>
