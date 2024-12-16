@@ -101,7 +101,7 @@ export default function FontPanel() {
           onChange={(e) => updateFont({ ...state.font, family: e.target.value })}
           className="w-full p-2 border rounded hover:border-blue-500 focus:border-blue-500 focus:outline-none"
         >
-          <option value='"Noto Serif SC", serif'>���源宋体</option>
+          <option value='"Noto Serif SC", serif'>思源宋体</option>
           <option value='"Noto Sans SC", sans-serif'>思源黑体</option>
           <option value="KaiTi, serif">楷体</option>
           <option value="XingKai SC, cursive">行楷</option>
