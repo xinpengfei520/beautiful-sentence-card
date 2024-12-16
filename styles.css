@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 自定义样式 */
+.card-editor {
+  @apply flex flex-col h-full;
+}
+
+.editor-container {
+  @apply flex gap-4 p-4;
+}
+
+.edit-area {
+  @apply w-1/2;
+}
+
+.preview-area {
+  @apply w-1/2 border rounded p-4;
+}
+
+.toolbar-select {
+  @apply px-2 py-1 border rounded;
+}
+
+.toolbar-button {
+  @apply p-2 border rounded hover:bg-gray-100;
+}
+
+.tab-button {
+  @apply hover:bg-gray-100;
+}
+
+.tab-button.active {
+  @apply border-b-2 border-blue-500;
+}
+
+/* 卡片预览样式 */
+.card-preview {
+  @apply min-h-[200px] p-4 border rounded;
+  background-size: cover;
+  background-position: center;
+}
+
+/* 模板网格样式 */
+.template-item:hover {
+  @apply border-blue-300;
+}
+
+.template-preview {
+  @apply flex items-center justify-center text-center;
+} 

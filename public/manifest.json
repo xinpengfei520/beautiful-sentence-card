@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "精美金句卡片生成器",
+  "description": "一键生成精美的金句卡片",
+  "version": "1.0",
+  "permissions": [
+    "contextMenus",
+    "storage",
+    "downloads",
+    "activeTab"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["contentScript.js"]
+    }
+  ],
+  "commands": {
+    "create-card": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y"
+      },
+      "description": "创建卡片"
+    }
+  }
+} 
