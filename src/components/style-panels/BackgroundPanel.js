@@ -5,7 +5,8 @@ import { useStyle } from '../../context/StyleContext';
 export default function BackgroundPanel() {
   const { state, updateBackground } = useStyle();
   const [showColorPicker, setShowColorPicker] = useState(false);
-  const [selectedType, setSelectedType] = useState(''); // 默认不选中任何类型
+  const [showGradientPicker, setShowGradientPicker] = useState(false);
+  const [selectedType, setSelectedType] = useState('');
   
   // 临时存储用户选择的颜色，但还未确认
   const [tempColor, setTempColor] = useState(state.background.color);
@@ -41,7 +42,7 @@ export default function BackgroundPanel() {
       type: 'gradient',
       gradient: tempGradient
     });
-    setShowColorPicker(false);
+    setShowGradientPicker(false);
   };
 
   // 处理背景类型变化
@@ -49,8 +50,11 @@ export default function BackgroundPanel() {
     setSelectedType(type);
     if (type === 'color') {
       setShowColorPicker(true);
+      setShowGradientPicker(false);
       setTempColor(state.background.color);
     } else if (type === 'gradient') {
+      setShowColorPicker(false);
+      setShowGradientPicker(true);
       setTempGradient(state.background.gradient);
     }
   };
@@ -149,28 +153,38 @@ export default function BackgroundPanel() {
             </div>
           )}
 
-          <div className="gradient-colors space-y-4">
-            {tempGradient.colors.map((color, index) => (
-              <div key={index} className="flex items-center gap-2">
-                <div 
-                  className="color-preview cursor-pointer"
-                  style={{ backgroundColor: color }}
-                />
-                <SketchPicker 
-                  color={color}
-                  onChange={(color) => handleGradientChange(index, color)}
-                />
-              </div>
-            ))}
-          </div>
+          {showGradientPicker && (
+            <div className="gradient-colors space-y-4">
+              {tempGradient.colors.map((color, index) => (
+                <div key={index} className="flex items-center gap-2">
+                  <div 
+                    className="color-preview cursor-pointer"
+                    style={{ backgroundColor: color }}
+                  />
+                  <SketchPicker 
+                    color={color}
+                    onChange={(color) => handleGradientChange(index, color)}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
 
-          <div className="mt-4 flex justify-end">
+          <div className="mt-4 flex justify-end gap-2">
             <button
-              onClick={handleGradientConfirm}
-              className="btn btn-primary"
+              onClick={() => setShowGradientPicker(!showGradientPicker)}
+              className="btn btn-secondary"
             >
-              确认渐变
+              {showGradientPicker ? '取消' : '选择颜色'}
             </button>
+            {showGradientPicker && (
+              <button
+                onClick={handleGradientConfirm}
+                className="btn btn-primary"
+              >
+                确认渐变
+              </button>
+            )}
           </div>
         </div>
       )}
