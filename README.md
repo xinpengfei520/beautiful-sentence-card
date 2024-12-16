@@ -60,6 +60,23 @@
 - Chrome Extension API
 - html2canvas
 
-## 开发说明
+## 项目命令汇总
 
-### 安装依赖
+以下是本项目中使用的npm命令：
+
+### 清理命令
+
+npm run clean: 清理dist目录。
+
+### 构建命令
+
+npm run build: 构建项目，生成生产环境的文件。
+npm run build:clean: 清理 dist 目录并重新构建项目。
+
+### 监视命令
+
+npm run watch: 监视文件变化，自动重新构建项目。
+
+### 启动命令
+
+npm run start: 启动开发服务器，进行实时开发。
