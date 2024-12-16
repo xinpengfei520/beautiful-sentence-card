@@ -17,12 +17,24 @@
   }
   
   .color-preview {
+    @apply w-8 h-8 rounded-lg border-2 border-gray-200;
     transition: all 0.3s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   }
   
   .color-preview:hover {
-    opacity: 0.8;
-  } 
+    transform: scale(1.05);
+    border-color: #3B82F6;
+  }
+  
+  .color-picker-popup {
+    position: absolute;
+    z-index: 50;
+    background: white;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
   
   /* 模板预览样式 */
   .template-preview {
@@ -38,4 +50,27 @@
   
   .template-preview.selected {
     box-shadow: 0 0 0 2px #3B82F6;
+  } 
+  
+  /* 字体面板样式 */
+  .font-panel {
+    border-top: 1px solid #e5e7eb;
+  }
+  
+  /* 范围滑块样式 */
+  input[type="range"] {
+    @apply h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer;
+  }
+  
+  input[type="range"]::-webkit-slider-thumb {
+    @apply w-4 h-4 bg-blue-500 rounded-full appearance-none cursor-pointer;
+    border: 2px solid white;
+  }
+  
+  input[type="range"]:focus {
+    @apply outline-none;
+  }
+  
+  input[type="range"]::-webkit-slider-thumb:hover {
+    @apply bg-blue-600;
   } 
