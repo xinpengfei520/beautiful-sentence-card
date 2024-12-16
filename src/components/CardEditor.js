@@ -2,6 +2,9 @@ import React, { useRef, useEffect, useState } from 'react';
 import { useStyle } from '../context/StyleContext';
 import ExportPanel from './ExportPanel';
 
+// 检查是否在 Chrome 扩展环境中
+const isExtension = typeof chrome !== 'undefined' && chrome.storage;
+
 export default function CardEditor({ initialText }) {
   const { state } = useStyle();
   const cardRef = useRef(null);
@@ -34,9 +37,13 @@ export default function CardEditor({ initialText }) {
 
   // 处理文本变化
   const handleTextChange = (e) => {
-    setText(e.target.value);
-    // 同步更新到 storage
-    chrome.storage.local.set({ selectedText: e.target.value });
+    const newText = e.target.value;
+    setText(newText);
+    
+    // 只在扩展环境中同步到 storage
+    if (isExtension) {
+      chrome.storage.local.set({ selectedText: newText });
+    }
   };
 
   // 生成卡片样式对象
