@@ -1,0 +1,25 @@
+.card-preview {
+  @apply min-h-[200px] p-4 border rounded;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-content {
+  max-width: 90%;
+  word-break: break-word;
+}
+
+.color-picker-container {
+  position: relative;
+}
+
+.color-preview {
+  transition: all 0.3s ease;
+}
+
+.color-preview:hover {
+  opacity: 0.8;
+} 
