@@ -79,3 +79,40 @@
   input[type="range"]::-webkit-slider-thumb:hover {
     @apply bg-blue-600;
   } 
+  
+  /* 编辑器容器样式 */
+  .editor-container {
+    @apply bg-white rounded-lg shadow-sm;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  /* 原文编辑区域样式 */
+  .edit-area textarea {
+    width: 100%;
+    font-family: inherit;
+    line-height: 1.6;
+    transition: all 0.3s ease;
+    background-color: #FAFAFA;
+  }
+  
+  .edit-area textarea:focus {
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+    background-color: #FFFFFF;
+  }
+  
+  /* 预览区域样式 */
+  .preview-section {
+    margin-top: 2rem;
+  }
+  
+  .card-preview {
+    @apply min-h-[200px] rounded-lg;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }

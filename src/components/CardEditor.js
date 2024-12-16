@@ -1,12 +1,17 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { useStyle } from '../context/StyleContext';
-import Toolbar from './Toolbar';
 import ExportPanel from './ExportPanel';
 
-export default function CardEditor({ text }) {
+export default function CardEditor({ initialText }) {
   const { state } = useStyle();
   const cardRef = useRef(null);
   const previewRef = useRef(null);
+  const [text, setText] = useState(initialText);
+
+  // 监听初始文本变化
+  useEffect(() => {
+    setText(initialText);
+  }, [initialText]);
 
   // 监听样式变化，更新预览
   useEffect(() => {
@@ -21,16 +26,20 @@ export default function CardEditor({ text }) {
     const card = cardRef.current;
     
     if (preview && card) {
-      // 确保预览区域大小合适
       preview.style.width = `${state.layout.width}px`;
       preview.style.height = `${state.layout.height}px`;
-      
-      // 添加平滑过渡
       preview.style.transition = 'all 0.3s ease';
     }
   };
 
-  // 生成样式对象
+  // 处理文本变化
+  const handleTextChange = (e) => {
+    setText(e.target.value);
+    // 同步更新到 storage
+    chrome.storage.local.set({ selectedText: e.target.value });
+  };
+
+  // 生成卡片样式对象
   const cardStyle = {
     // 背景样式
     ...(state.background.type === 'color' && {
@@ -74,43 +83,52 @@ export default function CardEditor({ text }) {
 
   return (
     <div className="card-editor">
-      <Toolbar />
-      
       <div className="editor-container p-4">
-        {/* 编辑区域 */}
-        <div className="edit-area mb-4">
+        {/* 原文编辑区域 */}
+        <div className="edit-area mb-6">
+          <label className="block mb-2 text-gray-700 font-medium">
+            金句原文
+          </label>
           <textarea
             value={text}
-            readOnly
-            className="w-full p-4 border rounded"
+            onChange={handleTextChange}
+            placeholder="输入或粘贴你想要生成卡片的金句..."
+            className="w-full p-4 border rounded resize-none focus:border-blue-500 focus:outline-none"
             style={{
-              fontFamily: state.font.family,
-              fontSize: `${state.font.size}px`,
-              color: state.font.color,
-              minHeight: '100px',
-              resize: 'vertical'
+              fontFamily: '"Noto Sans SC", system-ui, -apple-system, sans-serif',
+              fontSize: '16px',
+              color: '#374151',
+              minHeight: '80px',
+              maxHeight: '120px',
+              lineHeight: '1.6',
+              backgroundColor: '#FAFAFA'
             }}
           />
         </div>
 
-        {/* 预览区域 */}
-        <div 
-          ref={previewRef}
-          className="preview-area mx-auto overflow-hidden"
-          style={{
-            maxWidth: '100%',
-            backgroundColor: '#f5f5f5',
-            padding: '20px',
-            borderRadius: '12px'
-          }}
-        >
+        {/* 卡片预览区域 */}
+        <div className="preview-section">
+          <label className="block mb-2 text-gray-700 font-medium">
+            卡片预览
+          </label>
           <div 
-            ref={cardRef}
-            className="card-preview"
-            style={cardStyle}
+            ref={previewRef}
+            className="preview-area mx-auto overflow-hidden"
+            style={{
+              maxWidth: '100%',
+              backgroundColor: '#f5f5f5',
+              padding: '20px',
+              borderRadius: '12px'
+            }}
           >
-            <div className="card-content">
-              {text}
+            <div 
+              ref={cardRef}
+              className="card-preview"
+              style={cardStyle}
+            >
+              <div className="card-content">
+                {text}
+              </div>
             </div>
           </div>
         </div>

@@ -31,24 +31,15 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   console.log('右键菜单被点击:', info.selectionText);
   if (info.menuItemId === "create-card") {
     try {
-      // 先注入content script
-      await chrome.scripting.executeScript({
-        target: { tabId: tab.id },
-        files: ['contentScript.js']
+      // 保存选中的文本
+      await chrome.storage.local.set({ 
+        selectedText: info.selectionText 
       });
-
-      // 然后发送消息
-      chrome.tabs.sendMessage(tab.id, {
-        type: "CREATE_CARD",
-        text: info.selectionText
-      }, (response) => {
-        console.log('发送消息响应:', response);
-        if (chrome.runtime.lastError) {
-          console.error('发送消息错误:', chrome.runtime.lastError);
-        }
-      });
+      
+      // 打开弹窗
+      chrome.action.openPopup();
     } catch (error) {
-      console.error('注入脚本错误:', error);
+      console.error('处理选中文本错误:', error);
     }
   }
 });
