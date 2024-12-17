@@ -5,6 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>感谢使用 - 金句卡片生成器</title>
   <link href="styles/uninstall.css" rel="stylesheet">
+  <script>
+    console.log('卸载页面加载');
+    console.log('Referrer:', document.referrer);
+    console.log('URL:', window.location.href);
+    window.onerror = function(msg, url, line) {
+      console.error('Error:', msg);
+      console.error('URL:', url);
+      console.error('Line:', line);
+      return false;
+    };
+  </script>
 </head>
 <body class="bg-gray-50">
   <div class="uninstall-page">

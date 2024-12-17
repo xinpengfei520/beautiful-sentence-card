@@ -11,7 +11,8 @@
     "scripting"
   ],
   "host_permissions": [
-    "<all_urls>"
+    "<all_urls>",
+    "https://card.vance.xin/*"
   ],
   "action": {
     "default_popup": "popup.html"
@@ -33,5 +34,5 @@
       "description": "创建卡片"
     }
   },
-  "uninstall_url": "https://card.vance.xin/uninstall.html"
+  "uninstall_url": "https://card.vance.xin/uninstall.html?source=extension&t={timestamp}"
 } 
