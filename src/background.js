@@ -63,12 +63,15 @@ chrome.commands.onCommand.addListener((command) => {
   }
 });
 
-// 在扩展卸载前尝试打开页面
-chrome.runtime.setUninstallURL('https://card.vance.xin/uninstall.html', () => {
-  if (chrome.runtime.lastError) {
-    console.error('设置卸载 URL 失败:', chrome.runtime.lastError);
-  } else {
-    console.log('卸载 URL 设置成功');
+// 在扩展卸载前设置带有扩展ID的卸载URL
+chrome.runtime.setUninstallURL(
+  `https://card.vance.xin/uninstall.html?source=extension&extId=${chrome.runtime.id}&t=${Date.now()}`,
+  () => {
+    if (chrome.runtime.lastError) {
+      console.error('设置卸载 URL 失败:', chrome.runtime.lastError);
+    } else {
+      console.log('卸载 URL 设置成功');
+    }
   }
-});
+);
   

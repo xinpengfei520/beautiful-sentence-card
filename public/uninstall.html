@@ -6,24 +6,50 @@
   <title>感谢使用 - 金句卡片生成器</title>
   <link href="styles/uninstall.css" rel="stylesheet">
   <script>
-    console.log('卸载页面加载');
-    console.log('Referrer:', document.referrer);
-    console.log('URL:', window.location.href);
+    // 获取URL参数
+    function getQueryParams() {
+      const params = new URLSearchParams(window.location.search);
+      return {
+        extId: params.get('extId'),
+        source: params.get('source'),
+        timestamp: params.get('t')
+      };
+    }
+
+    // 页面加载时记录参数
+    window.onload = function() {
+      const params = getQueryParams();
+      console.log('扩展ID:', params.extId);
+      console.log('来源:', params.source);
+      console.log('时间戳:', params.timestamp);
+    };
+
+    // 提交反馈
+    function handleSubmit() {
+      const feedbackContainer = document.querySelector('.feedback-container');
+      const thanksContainer = document.querySelector('.thanks-container');
+      const feedbackText = document.querySelector('.feedback-input').value;
+      const params = getQueryParams();
+      
+      // 这里可以添加反馈提交到服务器的逻辑
+      console.log('提交反馈:', {
+        extId: params.extId,
+        feedback: feedbackText,
+        timestamp: params.timestamp
+      });
+      
+      // 显示感谢信息
+      feedbackContainer.style.display = 'none';
+      thanksContainer.style.display = 'block';
+    }
+
+    // 错误处理
     window.onerror = function(msg, url, line) {
       console.error('Error:', msg);
       console.error('URL:', url);
       console.error('Line:', line);
       return false;
     };
-
-    function handleSubmit() {
-      const feedbackContainer = document.querySelector('.feedback-container');
-      const thanksContainer = document.querySelector('.thanks-container');
-      
-      // 隐藏反馈表单,显示感谢信息
-      feedbackContainer.style.display = 'none';
-      thanksContainer.style.display = 'block';
-    }
   </script>
 </head>
 <body class="bg-gray-50">
