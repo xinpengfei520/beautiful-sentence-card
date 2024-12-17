@@ -15,10 +15,20 @@
       console.error('Line:', line);
       return false;
     };
+
+    function handleSubmit() {
+      const feedbackContainer = document.querySelector('.feedback-container');
+      const thanksContainer = document.querySelector('.thanks-container');
+      
+      // 隐藏反馈表单,显示感谢信息
+      feedbackContainer.style.display = 'none';
+      thanksContainer.style.display = 'block';
+    }
   </script>
 </head>
 <body class="bg-gray-50">
   <div class="uninstall-page">
+    <!-- 反馈表单 -->
     <div class="feedback-container">
       <img 
         src="img/icon_uninstall.png" 
@@ -33,9 +43,22 @@
         placeholder="您的反馈将帮助我们做得更好。"
       ></textarea>
 
-      <button class="submit-button">
+      <button 
+        class="submit-button"
+        onclick="handleSubmit()"
+      >
         提交
       </button>
+    </div>
+
+    <!-- 感谢信息 -->
+    <div class="thanks-container" style="display: none;">
+      <img 
+        src="img/icon_uninstall.png" 
+        alt="反馈图标" 
+        class="feedback-icon"
+      />
+      <h1 class="feedback-title">❤️感谢你的反馈</h1>
     </div>
   </div>
 </body>

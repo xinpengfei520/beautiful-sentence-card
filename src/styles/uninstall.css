@@ -75,6 +75,23 @@
   background-color: #1D4ED8;
 }
 
+/* 感谢信息容器 */
+.thanks-container {
+  max-width: 480px;
+  width: 100%;
+  padding: 40px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* 动画效果 */
+.feedback-container,
+.thanks-container {
+  transition: all 0.3s ease;
+}
+
 /* 响应式适配 */
 @media (max-width: 640px) {
   .feedback-container {
@@ -87,5 +104,9 @@
 
   .feedback-subtitle {
     font-size: 14px;
+  }
+
+  .thanks-container {
+    padding: 24px;
   }
 } 
