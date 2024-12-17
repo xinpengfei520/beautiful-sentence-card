@@ -110,3 +110,46 @@
     padding: 24px;
   }
 } 
+
+/* 错误提示样式 */
+.error-tip {
+  color: #DC2626;
+  font-size: 14px;
+  margin: 8px 0;
+  padding: 8px;
+  background-color: #FEE2E2;
+  border-radius: 4px;
+  text-align: center;
+}
+
+/* Loading 动画 */
+.loading-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 禁用状态样式 */
+.submit-button:disabled {
+  background-color: #9CA3AF;
+  cursor: not-allowed;
+}
+
+/* 响应式调整 */
+@media (max-width: 640px) {
+  .error-tip {
+    font-size: 12px;
+    padding: 6px;
+  }
+} 
