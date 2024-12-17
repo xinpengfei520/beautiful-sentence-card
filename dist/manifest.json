@@ -32,5 +32,6 @@
       },
       "description": "创建卡片"
     }
-  }
+  },
+  "uninstall_url": "https://card.vance.xin/uninstall.html"
 } 

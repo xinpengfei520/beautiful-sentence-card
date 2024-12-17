@@ -1,0 +1,91 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+.uninstall-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: #F9FAFB;
+}
+
+.feedback-container {
+  max-width: 480px;
+  width: 100%;
+  padding: 40px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.feedback-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 24px;
+}
+
+.feedback-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1F2937;
+  margin-bottom: 8px;
+}
+
+.feedback-subtitle {
+  font-size: 16px;
+  color: #6B7280;
+  margin-bottom: 24px;
+}
+
+.feedback-input {
+  width: 100%;
+  min-height: 120px;
+  padding: 12px;
+  border: 1px solid #E5E7EB;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  font-size: 14px;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.feedback-input:focus {
+  outline: none;
+  border-color: #3B82F6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+.submit-button {
+  background-color: #3B82F6;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.submit-button:hover {
+  background-color: #2563EB;
+}
+
+.submit-button:active {
+  background-color: #1D4ED8;
+}
+
+/* 响应式适配 */
+@media (max-width: 640px) {
+  .feedback-container {
+    padding: 24px;
+  }
+
+  .feedback-title {
+    font-size: 20px;
+  }
+
+  .feedback-subtitle {
+    font-size: 14px;
+  }
+} 
