@@ -101,6 +101,30 @@ const PRESET_TEMPLATES = [
       color: '#5C4B3C',
       border: '1px solid #D3CDC4'
     }
+  },
+  {
+    id: 'simple-dots',
+    name: '简白点阵',
+    styles: {
+      background: {
+        type: 'pattern',
+        color: '#FFFFFF', // 背景色为白色
+        pattern: {
+          type: 'dots',
+          dotColor: '#CCCCCC', // 调淡点的颜色
+          dotSize: 1, // 点的大小为 1px
+          spacing: 12 // 增加点阵之间的间距
+        }
+      },
+      font: {
+        color: '#2C3E50' // 字体颜色
+      }
+    },
+    preview: {
+      backgroundColor: '#FFFFFF',
+      color: '#2C3E50',
+      border: '1px solid #E5E7EB'
+    }
   }
 ];
 
