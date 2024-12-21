@@ -77,6 +77,30 @@ const PRESET_TEMPLATES = [
       color: '#5C4B3C',
       border: '1px solid #D3CDC4'
     }
+  },
+  {
+    id: 'retro-dots',
+    name: '复古点阵',
+    styles: {
+      background: {
+        type: 'pattern',
+        color: '#F7F2E9', // 使用复古风的背景色
+        pattern: {
+          type: 'dots',
+          dotColor: '#888888', // 调淡点的颜色
+          dotSize: 1, // 点的大小为 1px
+          spacing: 12 // 增加点阵之间的间距
+        }
+      },
+      font: {
+        color: '#5C4B3C'
+      }
+    },
+    preview: {
+      backgroundColor: '#F7F2E9',
+      color: '#5C4B3C',
+      border: '1px solid #D3CDC4'
+    }
   }
 ];
 

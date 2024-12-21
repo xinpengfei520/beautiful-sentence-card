@@ -116,3 +116,10 @@
     justify-content: center;
     transition: all 0.3s ease;
   }
+  
+  /* 点阵背景样式 */
+  .pattern-background {
+    background-color: #F7F2E9; /* 背景色 */
+    background-image: radial-gradient(circle, #000000 1px, transparent 1px);
+    background-size: 7px 7px; /* 点阵大小和间距 */
+  }

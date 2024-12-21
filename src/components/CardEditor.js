@@ -63,6 +63,11 @@ export default function CardEditor({ initialText }) {
       backgroundSize: 'cover',
       backgroundPosition: 'center'
     }),
+    ...(state.background.type === 'pattern' && {
+      backgroundColor: state.background.color,
+      backgroundImage: `radial-gradient(circle, ${state.background.pattern.dotColor} ${state.background.pattern.dotSize}px, transparent ${state.background.pattern.dotSize}px)`,
+      backgroundSize: `${state.background.pattern.dotSize + state.background.pattern.spacing}px ${state.background.pattern.dotSize + state.background.pattern.spacing}px`
+    }),
     // 字体样式
     fontFamily: state.font.family,
     fontSize: `${state.font.size}px`,
